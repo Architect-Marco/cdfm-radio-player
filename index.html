@@ -5,88 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CDFM 108.8 | NOIR SECTOR PLAYER</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        body { background: #000; font-family: 'Rajdhani', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 0; }
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; box-shadow: 0 0 50px rgba(255, 0, 255, 0.15); }
-        .bar { width: 5px; background: #ff00ff; border-radius: 2px; height: 10px; transition: height 0.2s ease; }
-        .is-playing .bar { animation: dance 0.8s ease-in-out infinite alternate; }
-        @keyframes dance { from { height: 5px; } to { height: 45px; } }
+        body { background: #000; font-family: 'Rajdhani', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; }
+        .bar { width: 6px; background: #ff00ff; border-radius: 3px; height: 10px; }
+        .is-playing .bar { animation: dance 0.6s ease-in-out infinite alternate; }
+        @keyframes dance { from { height: 10px; } to { height: 50px; } }
         .orbitron { font-family: 'Orbitron', sans-serif; }
     </style>
 </head>
 <body>
 
-    <div class="glass w-[95%] max-w-4xl h-[550px] flex overflow-hidden">
-        <!-- SIDEBAR -->
-        <div class="w-1/4 border-r border-white/5 p-8 hidden md:flex flex-col gap-6">
-            <h2 class="orbitron text-pink-500 text-[10px] tracking-[0.4em]">STATIONS</h2>
-            <div class="text-white text-sm font-bold opacity-100 cursor-pointer">108.8 CDFM</div>
-            <div class="text-white/30 text-sm hover:text-white transition-all cursor-pointer">107.9 WKOR</div>
-            <div class="text-white/30 text-sm hover:text-white transition-all cursor-pointer">NOIR SECTOR</div>
+    <div class="glass w-[90%] max-w-md p-10 flex flex-col items-center shadow-[0_0_50px_rgba(255,0,255,0.1)]">
+        <!-- LIVE STATUS -->
+        <div class="w-full flex justify-end mb-4">
+            <div id="dot" class="w-2 h-2 bg-white/20 rounded-full mr-2 mt-1"></div>
+            <span id="stat" class="text-[10px] orbitron text-white/30 tracking-widest uppercase">Off-Air</span>
         </div>
 
-        <!-- MAIN ENGINE -->
-        <div class="flex-1 p-6 md:p-10 flex flex-col items-center justify-center relative">
-            <div class="absolute top-8 right-10 flex items-center gap-2">
-                <div id="live-dot" class="w-2 h-2 bg-white/20 rounded-full"></div>
-                <span class="text-[10px] text-white/40 orbitron tracking-widest uppercase" id="status-text">Off-Air</span>
-            </div>
-
-            <!-- ARTWORK -->
-            <div class="w-48 h-48 md:w-56 md:h-56 bg-gradient-to-br from-pink-500/30 to-black rounded-3xl mb-8 border border-white/10 flex items-center justify-center overflow-hidden shadow-2xl">
-                <img src="https://via.placeholder.com/400/1a1a2e/ff00ff?text=CDFM+108.8" class="w-full h-full object-cover opacity-80" id="main-art">
-            </div>
-
-            <h1 class="orbitron text-white text-lg md:text-xl tracking-tighter mb-2 text-center">I CANT LET THIS FEELING GO</h1>
-            <p class="text-pink-500 text-[10px] font-bold tracking-[0.6em] mb-10 text-center">FT: LEXI CON (#001)</p>
-
-            <!-- VISUALIZER -->
-            <div id="viz-container" class="flex items-end gap-1.5 h-12 mb-10">
-                <div class="bar" style="animation-delay: 0.1s"></div>
-                <div class="bar" style="animation-delay: 0.3s"></div>
-                <div class="bar" style="animation-delay: 0.5s"></div>
-                <div class="bar" style="animation-delay: 0.2s"></div>
-                <div class="bar" style="animation-delay: 0.4s"></div>
-                <div class="bar" style="animation-delay: 0.6s"></div>
-            </div>
-
-            <!-- MASTER CONTROL -->
-            <button id="master-control" class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-black text-2xl hover:scale-110 active:scale-95 transition-all shadow-[0_0_40px_rgba(255,255,255,0.4)]">▶</button>
-            
-            <!-- SECURE AUDIO SOURCE -->
-            <audio id="audio-engine" crossorigin="anonymous" src="https://stream.zeno.fm/f966289u3mzuv"></audio>
+        <!-- ARTWORK -->
+        <div class="w-64 h-64 bg-zinc-900 rounded-2xl mb-8 overflow-hidden border border-white/10 shadow-2xl">
+            <img src="lexi-pilot.jpg" onerror="this.src='https://via.placeholder.com/400/ff00ff/ffffff?text=CDFM+108.8'" class="w-full h-full object-cover">
         </div>
+
+        <h1 class="orbitron text-white text-xl tracking-tighter mb-1 text-center">LAN KWAI FUNG</h1>
+        <p class="text-pink-500 text-[10px] font-bold tracking-[0.5em] mb-10">ARCHITECT MACO</p>
+
+        <!-- VISUALIZER -->
+        <div id="viz" class="flex items-end gap-2 h-12 mb-10">
+            <div class="bar" style="animation-delay: 0.1s"></div>
+            <div class="bar" style="animation-delay: 0.3s"></div>
+            <div class="bar" style="animation-delay: 0.5s"></div>
+            <div class="bar" style="animation-delay: 0.2s"></div>
+            <div class="bar" style="animation-delay: 0.4s"></div>
+        </div>
+
+        <!-- CONTROL -->
+        <button id="playBtn" class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-black text-3xl shadow-white shadow-2xl hover:scale-105 active:scale-90 transition-all">▶</button>
+        
+        <audio id="engine" src="track1.mp3"></audio>
     </div>
 
     <script>
-        const btn = document.getElementById('master-control');
-        const audio = document.getElementById('audio-engine');
-        const viz = document.getElementById('viz-container');
-        const dot = document.getElementById('live-dot');
-        const status = document.getElementById('status-text');
+        const audio = document.getElementById('engine');
+        const btn = document.getElementById('playBtn');
+        const viz = document.getElementById('viz');
+        const dot = document.getElementById('dot');
+        const stat = document.getElementById('stat');
 
-        btn.addEventListener('click', () => {
+        btn.onclick = () => {
             if (audio.paused) {
-                audio.play().then(() => {
-                    btn.innerText = "⏸";
-                    viz.classList.add('is-playing');
-                    dot.classList.add('bg-red-600', 'animate-pulse');
-                    status.innerText = "Live On-Air";
-                    status.classList.add('text-red-500');
-                }).catch(err => {
-                    console.error("Audio failed:", err);
-                    alert("Click Play again to activate the Spicy Signal!");
-                });
+                audio.play();
+                btn.innerText = "⏸";
+                viz.classList.add('is-playing');
+                dot.classList.add('bg-red-600', 'animate-pulse');
+                stat.innerText = "Live On-Air";
+                stat.classList.add('text-red-500');
             } else {
                 audio.pause();
                 btn.innerText = "▶";
                 viz.classList.remove('is-playing');
                 dot.classList.remove('bg-red-600', 'animate-pulse');
-                status.innerText = "Off-Air";
-                status.classList.remove('text-red-500');
+                stat.innerText = "Off-Air";
+                stat.classList.remove('text-red-500');
             }
-        });
+        };
     </script>
 </body>
 </html>
