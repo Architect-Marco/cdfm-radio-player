@@ -7,71 +7,86 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        body { background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%); font-family: 'Rajdhani', sans-serif; overflow: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
-        .neon-text { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; }
-        .neon-border { box-shadow: 0 0 15px rgba(255, 0, 255, 0.3); }
+        body { background: #000; font-family: 'Rajdhani', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 0; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; box-shadow: 0 0 50px rgba(255, 0, 255, 0.15); }
+        .bar { width: 5px; background: #ff00ff; border-radius: 2px; height: 10px; transition: height 0.2s ease; }
+        .is-playing .bar { animation: dance 0.8s ease-in-out infinite alternate; }
+        @keyframes dance { from { height: 5px; } to { height: 45px; } }
         .orbitron { font-family: 'Orbitron', sans-serif; }
     </style>
 </head>
-<body class="h-screen flex items-center justify-center p-4">
+<body>
 
-    <!-- MAIN PLAYER INTERFACE -->
-    <div class="glass w-full max-w-4xl h-[600px] flex overflow-hidden neon-border">
-        
-        <!-- SIDEBAR: STATIONS -->
-        <div class="w-1/4 border-r border-white/10 p-6 flex flex-col gap-4">
-            <h2 class="orbitron text-pink-500 text-xs tracking-widest mb-4">STATIONS</h2>
-            <div class="p-3 bg-pink-500/20 rounded-xl border border-pink-500/50 text-white cursor-pointer">108.8 CDFM</div>
-            <div class="p-3 hover:bg-white/5 rounded-xl text-white/50 cursor-pointer">107.9 WKOR</div>
-            <div class="p-3 hover:bg-white/5 rounded-xl text-white/50 cursor-pointer">NOIR SECTOR</div>
+    <div class="glass w-[95%] max-w-4xl h-[550px] flex overflow-hidden">
+        <!-- SIDEBAR -->
+        <div class="w-1/4 border-r border-white/5 p-8 hidden md:flex flex-col gap-6">
+            <h2 class="orbitron text-pink-500 text-[10px] tracking-[0.4em]">STATIONS</h2>
+            <div class="text-white text-sm font-bold opacity-100 cursor-pointer">108.8 CDFM</div>
+            <div class="text-white/30 text-sm hover:text-white transition-all cursor-pointer">107.9 WKOR</div>
+            <div class="text-white/30 text-sm hover:text-white transition-all cursor-pointer">NOIR SECTOR</div>
         </div>
 
-        <!-- HERO SECTION -->
-        <div class="flex-1 flex flex-col p-8 relative">
-            <div class="absolute top-8 right-8 flex items-center gap-2">
-                <span class="w-2 h-2 bg-red-600 rounded-full animate-pulse"></span>
-                <span class="text-white text-xs orbitron">LIVE ON-AIR</span>
+        <!-- MAIN ENGINE -->
+        <div class="flex-1 p-6 md:p-10 flex flex-col items-center justify-center relative">
+            <div class="absolute top-8 right-10 flex items-center gap-2">
+                <div id="live-dot" class="w-2 h-2 bg-white/20 rounded-full"></div>
+                <span class="text-[10px] text-white/40 orbitron tracking-widest uppercase" id="status-text">Off-Air</span>
             </div>
 
-            <!-- LEXI-CON ARTWORK -->
-            <div class="w-64 h-64 mx-auto rounded-2xl overflow-hidden shadow-2xl mb-8 border-2 border-white/20">
-                <img src="https://raw.githubusercontent.com/Architect-Marco/cdfm-radio-player/main/lexi_placeholder.jpg" alt="Lexi-Con" class="w-full h-full object-cover" id="hero-art">
+            <!-- ARTWORK -->
+            <div class="w-48 h-48 md:w-56 md:h-56 bg-gradient-to-br from-pink-500/30 to-black rounded-3xl mb-8 border border-white/10 flex items-center justify-center overflow-hidden shadow-2xl">
+                <img src="https://via.placeholder.com/400/1a1a2e/ff00ff?text=CDFM+108.8" class="w-full h-full object-cover opacity-80" id="main-art">
             </div>
 
-            <div class="text-center">
-                <h1 class="orbitron text-white text-2xl mb-1 tracking-tighter" id="track-title">I CANT LET THIS FEELING GO</h1>
-                <p class="text-pink-500 uppercase tracking-[0.3em] text-sm font-bold mb-8">Ft: LEXI CON (#001)</p>
+            <h1 class="orbitron text-white text-lg md:text-xl tracking-tighter mb-2 text-center">I CANT LET THIS FEELING GO</h1>
+            <p class="text-pink-500 text-[10px] font-bold tracking-[0.6em] mb-10 text-center">FT: LEXI CON (#001)</p>
+
+            <!-- VISUALIZER -->
+            <div id="viz-container" class="flex items-end gap-1.5 h-12 mb-10">
+                <div class="bar" style="animation-delay: 0.1s"></div>
+                <div class="bar" style="animation-delay: 0.3s"></div>
+                <div class="bar" style="animation-delay: 0.5s"></div>
+                <div class="bar" style="animation-delay: 0.2s"></div>
+                <div class="bar" style="animation-delay: 0.4s"></div>
+                <div class="bar" style="animation-delay: 0.6s"></div>
             </div>
 
-            <!-- AUDIO VISUALIZER (SIMULATED) -->
-            <div class="flex justify-center items-end gap-1 h-12 mb-8">
-                <div class="w-1 bg-pink-500 h-4 animate-[bounce_1s_infinite]"></div>
-                <div class="w-1 bg-white h-8 animate-[bounce_1.2s_infinite]"></div>
-                <div class="w-1 bg-pink-500 h-10 animate-[bounce_0.8s_infinite]"></div>
-                <div class="w-1 bg-white h-6 animate-[bounce_1.5s_infinite]"></div>
-                <div class="w-1 bg-pink-500 h-8 animate-[bounce_1.1s_infinite]"></div>
-            </div>
-
-            <!-- CONTROLS -->
-            <div class="flex items-center justify-center gap-12 text-white">
-                <button class="hover:text-pink-500 transition-colors">⏮</button>
-                <button class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black text-2xl hover:bg-pink-500 transition-all shadow-lg" id="play-btn">▶</button>
-                <button class="hover:text-pink-500 transition-colors">⏭</button>
-            </div>
+            <!-- MASTER CONTROL -->
+            <button id="master-control" class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-black text-2xl hover:scale-110 active:scale-95 transition-all shadow-[0_0_40px_rgba(255,255,255,0.4)]">▶</button>
+            
+            <!-- SECURE AUDIO SOURCE -->
+            <audio id="audio-engine" crossorigin="anonymous" src="https://stream.zeno.fm/f966289u3mzuv"></audio>
         </div>
     </div>
 
     <script>
-        // LOGIC FOR THE SIFU ARCHITECT
-        const playBtn = document.getElementById('play-btn');
-        let isPlaying = false;
+        const btn = document.getElementById('master-control');
+        const audio = document.getElementById('audio-engine');
+        const viz = document.getElementById('viz-container');
+        const dot = document.getElementById('live-dot');
+        const status = document.getElementById('status-text');
 
-        playBtn.onclick = () => {
-            isPlaying = !isPlaying;
-            playBtn.innerHTML = isPlaying ? "⏸" : "▶";
-            // Audio trigger logic will go here
-        };
+        btn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    btn.innerText = "⏸";
+                    viz.classList.add('is-playing');
+                    dot.classList.add('bg-red-600', 'animate-pulse');
+                    status.innerText = "Live On-Air";
+                    status.classList.add('text-red-500');
+                }).catch(err => {
+                    console.error("Audio failed:", err);
+                    alert("Click Play again to activate the Spicy Signal!");
+                });
+            } else {
+                audio.pause();
+                btn.innerText = "▶";
+                viz.classList.remove('is-playing');
+                dot.classList.remove('bg-red-600', 'animate-pulse');
+                status.innerText = "Off-Air";
+                status.classList.remove('text-red-500');
+            }
+        });
     </script>
 </body>
 </html>
