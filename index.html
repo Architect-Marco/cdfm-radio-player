@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CDFM 108.8 | STEALTH PLAYER</title>
+    <title>CDFM 108.8 | SMOOTH PLAYER</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
@@ -13,6 +13,8 @@
         .is-playing .bar { animation: dance 0.6s ease-in-out infinite alternate; }
         @keyframes dance { from { height: 10px; } to { height: 50px; } }
         .orbitron { font-family: 'Orbitron', sans-serif; }
+        /* REMOVES BLUE BORDER BOX ON CLICK */
+        button { outline: none !important; -webkit-tap-highlight-color: transparent; }
         #playBtn { transition: all 0.3s ease; filter: drop-shadow(0 0 10px rgba(255,255,255,0)); }
         .is-playing #playBtn { color: #ff00ff; filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.8)); }
     </style>
@@ -20,24 +22,21 @@
 <body>
 
     <div class="glass w-[90%] max-w-md p-10 flex flex-col items-center shadow-2xl">
-        <!-- DYNAMIC STATUS HUD -->
         <div class="w-full flex justify-between mb-4">
-            <span id="track-count" class="text-[10px] orbitron text-white/20">TRACK 1/3</span>
+            <span id="track-count" class="text-[10px] orbitron text-white/20 uppercase">Track 1/3</span>
             <div class="flex items-center">
                 <div id="dot" class="w-2 h-2 bg-white/20 rounded-full mr-2"></div>
                 <span id="stat" class="text-[10px] orbitron text-white/30 tracking-widest uppercase">Off-Air</span>
             </div>
         </div>
 
-        <!-- ARTWORK -->
         <div class="w-64 h-64 bg-zinc-900 rounded-2xl mb-8 overflow-hidden border border-white/5 shadow-2xl">
             <img id="artwork" src="lexi-pilot-1.jpg" class="w-full h-full object-cover">
         </div>
 
-        <h1 id="title" class="orbitron text-white text-xl tracking-tighter mb-1 text-center">LAN KWAI FUNG</h1>
+        <h1 id="title" class="orbitron text-white text-xl tracking-tighter mb-1 text-center h-14 flex items-center">LAN KWAI FUNG</h1>
         <p id="artist" class="text-pink-500 text-[10px] font-bold tracking-[0.5em] mb-10 uppercase">Architect Maco</p>
 
-        <!-- VISUALIZER -->
         <div id="viz" class="flex items-end gap-2 h-12 mb-10">
             <div class="bar" style="animation-delay: 0.1s"></div>
             <div class="bar" style="animation-delay: 0.3s"></div>
@@ -46,11 +45,10 @@
             <div class="bar" style="animation-delay: 0.4s"></div>
         </div>
 
-        <!-- STEALTH PLAYER CONTROLS -->
         <div class="flex items-center gap-12">
-            <button id="prevBtn" class="text-white/20 hover:text-white transition-colors text-2xl">⏮</button>
+            <button id="prevBtn" class="text-white/20 hover:text-white transition-colors text-2xl active:scale-90">⏮</button>
             <button id="playBtn" class="text-white text-6xl active:scale-90 transition-all cursor-pointer">▶</button>
-            <button id="nextBtn" class="text-white/20 hover:text-white transition-colors text-2xl">⏭</button>
+            <button id="nextBtn" class="text-white/20 hover:text-white transition-colors text-2xl active:scale-90">⏭</button>
         </div>
         
         <audio id="engine" src="track1.mp3"></audio>
@@ -75,13 +73,20 @@
         const dot = document.getElementById('dot');
         const stat = document.getElementById('stat');
 
-        function loadTrack(idx) {
-            const track = playlist[idx];
-            audio.src = track.file;
+        function updateUI() {
+            const track = playlist[currentIdx];
             title.innerText = track.title;
             artwork.src = track.art;
-            count.innerText = `TRACK ${idx + 1}/${playlist.length}`;
-            if (!audio.paused) audio.play();
+            count.innerText = `Track ${currentIdx + 1}/${playlist.length}`;
+        }
+
+        function handleTrackChange() {
+            const wasPlaying = !audio.paused;
+            audio.src = playlist[currentIdx].file;
+            updateUI();
+            if (wasPlaying) {
+                audio.play();
+            }
         }
 
         btn.onclick = () => {
@@ -92,7 +97,6 @@
                 dot.classList.add('bg-red-600', 'animate-pulse');
                 stat.innerText = "On-Air";
                 stat.classList.add('text-red-500');
-                stat.classList.remove('text-white/30');
             } else {
                 audio.pause();
                 btn.innerText = "▶";
@@ -100,18 +104,24 @@
                 dot.classList.remove('bg-red-600', 'animate-pulse');
                 stat.innerText = "Off-Air";
                 stat.classList.remove('text-red-500');
-                stat.classList.add('text-white/30');
             }
         };
 
         nextBtn.onclick = () => {
             currentIdx = (currentIdx + 1) % playlist.length;
-            loadTrack(currentIdx);
+            handleTrackChange();
         };
 
         prevBtn.onclick = () => {
             currentIdx = (currentIdx - 1 + playlist.length) % playlist.length;
-            loadTrack(currentIdx);
+            handleTrackChange();
+        };
+
+        // AUTO-PLAY NEXT TRACK
+        audio.onended = () => {
+            currentIdx = (currentIdx + 1) % playlist.length;
+            handleTrackChange();
+            audio.play();
         };
     </script>
 </body>
