@@ -3,76 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CDFM 108.8 | SOVEREIGN MINI-POD v4.1</title>
+    <title>CDFM 108.8 | SOVEREIGN MINI-POD v4.3</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
         body { background: #000; font-family: 'Rajdhani', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 0; }
-        
-        /* The Sovereign Shell */
-        .glass { 
-            background: rgba(0, 0, 0, 0.95); 
-            backdrop-filter: blur(30px); 
-            border: 1.8px solid rgba(255, 255, 255, 1); 
-            border-radius: 45px; 
-            box-shadow: 0 0 40px rgba(0, 0, 0, 1); 
-            width: 300px; 
-            padding: 20px; 
-            position: relative; 
-            margin-top: -40px; /* Lifted to clear phone nav bars */
-            z-index: 100; 
-        }
-
-        /* 12-Line Visualizer */
+        .glass { background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(30px); border: 1.8px solid rgba(255, 255, 255, 1); border-radius: 45px; box-shadow: 0 0 40px rgba(0, 0, 0, 1); width: 300px; padding: 20px; position: relative; margin-top: -40px; z-index: 100; }
         .bar { width: 3px; background: #ff00ff; border-radius: 2px; height: 8px; margin: 0 1px; opacity: 0.3; transition: 0.3s; }
         .is-playing .bar { animation: dance 0.6s ease-in-out infinite alternate; opacity: 1; }
         @keyframes dance { from { height: 8px; } to { height: 35px; } }
-
-        /* Haptic Control Wheel */
-        .control-wheel { 
-            border: 1px solid rgba(255, 255, 255, 0.15); 
-            border-radius: 50%; 
-            width: 170px; 
-            height: 170px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 20px; 
-            margin: 10px auto 0; 
-            position: relative; 
-        }
-
-        /* Transparent Play Button */
-        #playBtn { 
-            position: relative; 
-            background: transparent; 
-            border: 1.5px solid rgba(255,255,255,0.8); 
-            border-radius: 50%; 
-            width: 55px; 
-            height: 55px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            transition: 0.3s; 
-        }
-
-        /* Pulse Ring Logic */
-        .is-playing #playBtn::after { 
-            content: ''; 
-            position: absolute; 
-            inset: -6px; 
-            border: 1px solid rgba(255, 255, 255, 0.3); 
-            border-radius: 50%; 
-            animation: pulse 2s infinite; 
-        }
+        .control-wheel { border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 50%; width: 170px; height: 170px; display: flex; align-items: center; justify-content: center; gap: 20px; margin: 10px auto 0; position: relative; }
+        #playBtn { position: relative; background: transparent; border: 1.5px solid rgba(255,255,255,0.8); border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .is-playing #playBtn::after { content: ''; position: absolute; inset: -6px; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 0; } }
-        
         .orbitron { font-family: 'Orbitron', sans-serif; }
     </style>
 </head>
 <body>
     <div class="glass flex flex-col items-center">
-        <!-- Status Bar -->
         <div class="w-full flex justify-between mb-4 px-2">
             <span id="track-count" class="text-[10px] orbitron text-white uppercase font-bold tracking-widest">TRACK 1/8</span>
             <div class="flex items-center">
@@ -81,57 +29,36 @@
             </div>
         </div>
 
-        <!-- Artwork -->
         <div class="w-56 h-56 bg-zinc-900 rounded-2xl mb-4 overflow-hidden border border-white/10 shadow-2xl">
             <img id="artwork" src="lexi-pilot-1.jpg" class="w-full h-full object-cover">
         </div>
 
-        <!-- Metadata -->
         <div class="h-16 flex flex-col items-center justify-center text-center px-2">
-            <h1 id="title" class="orbitron text-white text-[13px] tracking-tighter mb-1 uppercase leading-tight">Syncing Signal...</h1>
+            <h1 id="title" class="orbitron text-white text-[13px] tracking-tighter mb-1 uppercase leading-tight">Syncing...</h1>
             <p class="text-pink-500 text-[9px] font-bold tracking-[0.4em] uppercase">Architect Sherman</p>
         </div>
 
-        <!-- Visualizer -->
         <div id="viz" class="flex items-end justify-center gap-1 h-10 mb-2">
-            <div class="bar" style="animation-delay: 0.1s"></div>
-            <div class="bar" style="animation-delay: 0.3s"></div>
-            <div class="bar" style="animation-delay: 0.5s"></div>
-            <div class="bar" style="animation-delay: 0.2s"></div>
-            <div class="bar" style="animation-delay: 0.4s"></div>
-            <div class="bar" style="animation-delay: 0.6s"></div>
-            <div class="bar" style="animation-delay: 0.1s"></div>
-            <div class="bar" style="animation-delay: 0.3s"></div>
-            <div class="bar" style="animation-delay: 0.5s"></div>
-            <div class="bar" style="animation-delay: 0.2s"></div>
-            <div class="bar" style="animation-delay: 0.4s"></div>
-            <div class="bar" style="animation-delay: 0.6s"></div>
+            <div class="bar" style="animation-delay: 0.1s"></div><div class="bar" style="animation-delay: 0.3s"></div><div class="bar" style="animation-delay: 0.5s"></div><div class="bar" style="animation-delay: 0.2s"></div><div class="bar" style="animation-delay: 0.4s"></div><div class="bar" style="animation-delay: 0.6s"></div><div class="bar" style="animation-delay: 0.1s"></div><div class="bar" style="animation-delay: 0.3s"></div><div class="bar" style="animation-delay: 0.5s"></div><div class="bar" style="animation-delay: 0.2s"></div><div class="bar" style="animation-delay: 0.4s"></div><div class="bar" style="animation-delay: 0.6s"></div>
         </div>
 
-        <!-- Control Wheel -->
         <div class="control-wheel">
-            <button id="prevBtn" class="opacity-30 hover:opacity-100">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-            </button>
-            <button id="playBtn">
-                <div id="playIcon" class="w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-white border-b-[8px] border-b-transparent ml-1"></div>
-            </button>
-            <button id="nextBtn" class="opacity-30 hover:opacity-100">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M6 6l8.5 6L6 18zm9 0h2v12h-2z"/></svg>
-            </button>
+            <button id="prevBtn" class="opacity-30 hover:opacity-100"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+            <button id="playBtn"><div id="playIcon" class="w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-white border-b-[8px] border-b-transparent ml-1"></div></button>
+            <button id="nextBtn" class="opacity-30 hover:opacity-100"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M6 6l8.5 6L6 18zm9 0h2v12h-2z"/></svg></button>
         </div>
     </div>
 
     <script>
         const tracks = [
-            { title: "WHO WE ARE (LKF MIX)", file: "1 - WHO WE ARE - THE SICK TEAM (LKF MIX).mp3", art: "lexi-pilot-1.jpg" },
-            { title: "THE GRAND (TGD MIX)", file: "2 - THE GRAND - THE SICK TEAM (TGD MIX).mp3", art: "lexi-pilot-2.jpg" },
-            { title: "ROBERT CHAI (RCT MIX)", file: "3 - ROBERT CHAI - THE SICK TEAM (RCT MIX).mp3", art: "lexi-pilot-3.jpg" },
-            { title: "HK NIGHTLIFE (HKNL MIX)", file: "4 - HK NIGHTLIFE - THE SICK TEAM (HKNL MIX).mp3", art: "lexi-pilot-4.jpg" },
-            { title: "IM THE SCAR (TSYCE MIX)", file: "5 - IM THE SCAR YOU COULDNT ERASE - THE SICK TEAM (TSYCE MIX).mp3", art: "lexi-pilot-5.jpg" },
-            { title: "ROBERT CHAI (HBT MIX)", file: "6 - ROBERT CHAI - THE SICK TEAM (HBT MIX).mp3", art: "lexi-pilot-6.jpg" },
-            { title: "LE SAU PEH LAH (LSPL MIX)", file: "7 - LE SAU PEH LAH - THE SICK TEAM (LSPL MIX).mp3", art: "lexi-pilot-7.jpg" },
-            { title: "LAN KWAI FUNG (LKFTST MIX)", file: "8 - LAN KWAI FUNG - THE SICK TEAM (LKFTST MIX).mp3", art: "lexi-pilot-8.jpg" }
+            { track: 1, title: "WHO WE ARE (LKF MIX)", file: "1 - WHO WE ARE - THE SICK TEAM (LKF MIX).mp3", art: "lexi-pilot-1.jpg" },
+            { track: 2, title: "THE GRAND (TGD MIX)", file: "2 - THE GRAND - THE SICK TEAM (TGD MIX).mp3", art: "lexi-pilot-2.jpg" },
+            { track: 3, trackName: "ROBERT CHAI", title: "ROBERT CHAI (RCT MIX)", file: "3 - ROBERT CHAI - THE SICK TEAM (RCT MIX).mp3", art: "lexi-pilot-3.jpg" },
+            { track: 4, title: "HK NIGHTLIFE (HKNL MIX)", file: "4 - HK NIGHTLIFE - THE SICK TEAM (HKNL MIX).mp3", art: "lexi-pilot-4.jpg" },
+            { track: 5, title: "IM THE SCAR (TSYCE MIX)", file: "5 - IM THE SCAR YOU COULDNT ERASE - THE SICK TEAM (TSYCE MIX).mp3", art: "lexi-pilot-5.jpg" },
+            { track: 6, title: "ROBERT CHAI (HBT MIX)", file: "6 - ROBERT CHAI - THE SICK TEAM (HBT MIX).mp3", art: "lexi-pilot-6.jpg" },
+            { track: 7, title: "LE SAU PEH LAH (LSPL MIX)", file: "7 - LE SAU PEH LAH - THE SICK TEAM (LSPL MIX).mp3", art: "lexi-pilot-7.jpg" },
+            { track: 8, title: "LAN KWAI FUNG (LKFTST MIX)", file: "8 - LAN KWAI FUNG - THE SICK TEAM (LKFTST MIX).mp3", art: "lexi-pilot-8.jpg" }
         ];
 
         let idx = 0; let playing = false; const audio = new Audio();
@@ -142,21 +69,17 @@
 
         function load(i) {
             const t = tracks[i];
-            // ENCODE URI ensures the spaces are handled correctly by the browser
-            audio.src = encodeURIComponent(t.file).replace(/%20/g, ' '); 
-            // If the line above fails, we use the direct string
-            audio.src = t.file;
-            
+            // Encode handles spaces/dashes correctly for GitHub Pages
+            audio.src = encodeURI(t.file);
             title.innerText = t.title;
-            trackCount.innerText = `TRACK ${i + 1}/8`;
+            trackCount.innerText = `TRACK ${t.track}/8`;
             artwork.src = t.art;
-            if (playing) audio.play().catch(e => console.log("Stream sync pending..."));
+            if (playing) audio.play();
         }
 
         playBtn.onclick = () => {
             if (playing) {
-                audio.pause();
-                playing = false;
+                audio.pause(); playing = false;
                 glass.classList.remove('is-playing');
                 playIcon.className = "w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-white border-b-[8px] border-b-transparent ml-1";
                 playIcon.innerHTML = '';
@@ -164,15 +87,13 @@
                 statusText.innerText = "OFF-AIR";
             } else {
                 audio.play().then(() => {
-                    playing = true;
-                    glass.classList.add('is-playing');
+                    playing = true; glass.classList.add('is-playing');
                     playIcon.className = "flex gap-1";
                     playIcon.innerHTML = '<div class="w-1 h-4 bg-white"></div><div class="w-1 h-4 bg-white"></div>';
                     dot.className = "w-1.5 h-1.5 bg-pink-500 rounded-full mr-2 shadow-[0_0_10px_#ff00ff]";
                     statusText.innerText = "ON-AIR";
-                }).catch(err => {
-                    console.error(err);
-                    alert("Signal Check: " + tracks[idx].file + " not found. Verify filename in GitHub!");
+                }).catch(e => {
+                    alert("Signal Error: " + tracks[idx].file + " not found. Ensure names match GitHub exactly.");
                 });
             }
         };
@@ -180,6 +101,7 @@
         document.getElementById('nextBtn').onclick = () => { idx = (idx + 1) % 8; load(idx); };
         document.getElementById('prevBtn').onclick = () => { idx = (idx - 1 + 8) % 8; load(idx); };
         audio.onended = () => { idx = (idx + 1) % 8; load(idx); };
-        
         load(idx);
     </script>
+</body>
+</html>
