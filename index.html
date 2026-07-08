@@ -112,19 +112,35 @@
         const artDisplay = document.getElementById('artwork-display'); const dot = document.getElementById('dot');
         const statusText = document.getElementById('status-text');
 
-        function load(i) {
-            const t = tracks[i];
-            if (t.isIntro) {
-                video.style.opacity = "1"; artDisplay.style.opacity = "0";
-                trackCount.innerText = "INTRO";
-            } else {
-                video.style.opacity = "0"; artDisplay.style.opacity = "1";
-                artDisplay.src = t.art; audio.src = t.file;
-                trackCount.innerText = `TRACK ${i}/8`;
-            }
-            title.innerText = t.title;
-            if (playing) t.isIntro ? video.play() : audio.play();
+       function load(i) {
+    // 1. THE KILL SWITCH: Stop everything currently playing
+    audio.pause();
+    video.pause();
+    audio.currentTime = 0;
+
+    const t = tracks[i];
+    if (t.isIntro) {
+        video.style.opacity = "1"; 
+        artDisplay.style.opacity = "0";
+        trackCount.innerText = "INTRO";
+    } else {
+        video.style.opacity = "0"; 
+        artDisplay.style.opacity = "1";
+        artDisplay.src = t.art; 
+        audio.src = t.file;
+        trackCount.innerText = `TRACK ${i}/8`;
+    }
+    title.innerText = t.title;
+
+    // 2. TRIGGER PLAYBACK (Only if the system is in 'playing' state)
+    if (playing) {
+        if (t.isIntro) {
+            video.play();
+        } else {
+            audio.play();
         }
+    }
+}
 
         playBtn.onclick = () => {
             if (playing) {
@@ -152,5 +168,5 @@
 
         load(idx);
     </script>
-</body>
-</html>
+
+
