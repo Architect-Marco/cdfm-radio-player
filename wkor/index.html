@@ -93,18 +93,20 @@
     </div>
 
     <script>
-        const tracks = [
-            { isIntro: true, title: "THE SICK TEAM INTRODUCTION", file: "team-loop.mp4", art: "lexi-pilot-1.jpg" },
-            { title: "WHO WE ARE (LKF MIX)", file: "track1.mp3", art: "lexi-pilot-1.jpg" },
-            { title: "THE GRAND (TGD MIX)", file: "track2.mp3", art: "lexi-pilot-2.jpg" },
-            { title: "ROBERT CHAI (RCT MIX)", file: "track3.mp3", art: "lexi-pilot-3.jpg" },
-            { title: "HK NIGHTLIFE (HKNL MIX)", file: "track4.mp3", art: "lexi-pilot-4.jpg" },
-            { title: "IM THE SCAR (TSYCE MIX)", file: "track5.mp3", art: "lexi-pilot-5.jpg" },
-            { title: "ROBERT CHAI (HBT MIX)", file: "track6.mp3", art: "lexi-pilot-6.jpg" },
-            { title: "LE SAU PEH LAH (LSPL MIX)", file: "track7.mp3", art: "lexi-pilot-7.jpg" },
-            { title: "LAN KWAI FUNG (LKFTST MIX)", file: "track8.mp3", art: "lexi-pilot-8.jpg" }
-        ];
-
+       const tracks = [
+    { title: "THE SICK TEAM MINI ALBUM MIX", file: "0 - THE SICK TEAM MINI ALUM MIX - intro.mp4", isIntro: true },
+    { title: "I CANT LET THIS FEELING GO (ORIGINAL)", file: "1 - I CANT LET THIS FEELING GO - FEAT LEXI CON (Original Mix).mp4", isIntro: false },
+    { title: "THIS IS US (PART 1)", file: "2 - THIS IS US - THE SICK TEAM FT LEIX CON 1.mp4", isIntro: false },
+    { title: "THIS IS US (PART 2)", file: "3 - THIS IS US - THE SICK TEAM FT LEIX CON 2.mp4", isIntro: false },
+    { title: "ROCK THIS BEATS (PART 1)", file: "4 - ROCK THIS BEATS - THE SICK TEAM FT LEXI CON 1.mp4", isIntro: false },
+    { title: "ROCK THIS BEATS (PART 2)", file: "5 - ROCK THIS BEATS - THE SICK TEAM FT LEXI CON 2.mp4", isIntro: false },
+    { title: "I CANT LET THIS FEELING GO (REMIX 1)", file: "6 - I CANT LET THIS FEELING GO - REMIX - THE SICK TEAM FT LEXI CON 1.mp4", isIntro: false },
+    { title: "I CANT LET THIS FEELING GO (REMIX 2)", file: "7 - I CANT LET THIS FEELING GO REMIX - THE SICK TEAM FT LEXI CON 2.mp4", isIntro: false },
+    { title: "YOU FEEL THE EMOTION (PART 1)", file: "8 - YOU FEEL THE EMOTION - THE SICK TEAM FT LEXI CON 1.mp4", isIntro: false },
+    { title: "YOU FEEL THE EMOTION (PART 2)", file: "9 - YOU FEEL THE EMOTION - THE SICK TEAM FT LEXI CON 2.mp4", isIntro: false },
+    { title: "REACH OUT (PART 1)", file: "10 - REACH OUT - THE SICK TEAM FT LEXI CON 1.mp4", isIntro: false },
+    { title: "REACH OUT (PART 2)", file: "11 - REACH OUT - THE SICK TEAM FT LEXI CON 2.mp4", isIntro: false }
+];
         let idx = 0; let playing = false; const audio = new Audio();
         const playBtn = document.getElementById('playBtn'); const playIcon = document.getElementById('playIcon');
         const glass = document.querySelector('.glass'); const title = document.getElementById('title');
@@ -113,38 +115,26 @@
         const statusText = document.getElementById('status-text');
 
     function load(i) {
-    // 1. HARD KILL: Stop and Reset both Audio and Video Playheads
-    audio.pause();
-    audio.currentTime = 0; 
+    // KILL PREVIOUS
     video.pause();
-    video.currentTime = 0; 
+    video.currentTime = 0;
+    audio.pause();
+    audio.src = "";
 
     const t = tracks[i];
     
-    if (t.isIntro) {
-        // UI VISUALS FOR INTRO
-        video.style.opacity = "1"; 
-        artDisplay.style.opacity = "0";
-        trackCount.innerText = "INTRO";
-    } else {
-        // UI VISUALS FOR 8-TRACK MODE
-        video.style.opacity = "0"; 
-        artDisplay.style.opacity = "1";
-        
-        artDisplay.src = t.art; 
-        audio.src = t.file;
-        trackCount.innerText = `TRACK ${i}/8`;
-    }
-
+    // UI LOCK
+    video.style.opacity = "1"; 
+    artDisplay.style.opacity = "0";
+    
+    // LOAD MP4
+    video.src = t.file; 
+    trackCount.innerText = t.isIntro ? "INTRO" : `VIDEO ${i}/11`;
     title.innerText = t.title;
 
-    // 2. THE HANDOFF LOGIC
+    // PLAY
     if (playing) {
-        if (t.isIntro) {
-            video.play();
-        } else {
-            audio.play();
-        }
+        video.play().catch(e => console.log("Haptic interaction needed."));
     }
 }
 
@@ -158,7 +148,8 @@
                 statusText.innerText = "OFF-AIR";
             } else {
                 playing = true;
-                if (tracks[idx].isIntro) { video.play(); } else { audio.play(); }
+               // For WKOR, we always play the video because everything is an MP4
+video.play();
                 glass.classList.add('is-playing');
                 playIcon.className = "flex gap-1";
                 playIcon.innerHTML = '<div class="w-1 h-4 bg-white"></div><div class="w-1 h-4 bg-white"></div>';
