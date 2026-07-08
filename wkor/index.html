@@ -27,8 +27,7 @@
     <div class="glass flex flex-col items-center">
         <!-- TOP UI -->
         <div class="w-full flex justify-between mb-4 px-2">
-            <span id="track-count" class="text-[10px] text-white uppercase font-bold tracking-widest text-white/80">WKOR 1/12</span>
-            <div class="flex items-center">
+            <span id="track-count" class="text-[10px] text-white uppercase font-bold tracking-widest text-white/80">WKOR FM</span>
                 <div id="dot" class="w-1.5 h-1.5 bg-white/20 rounded-full mr-2"></div>
                 <span id="status-text" class="text-[9px] text-white/40 uppercase font-bold tracking-widest">OFF-AIR</span>
             </div>
@@ -99,7 +98,7 @@
             title.innerText = t.title;
             artDisplay.src = t.art;
             audio.src = t.file;
-            trackCount.innerText = `WKOR ${i + 1}/12`;
+            trackCount.innerText = t.isIntro ? "WKOR INTRO" : "WKOR " + (i + 1) + "/12";
             if (playing) audio.play();
         }
 
