@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CDFM 108.8 | SOVEREIGN VIDEO-POD v6.1</title>
+    <title>CDFM 108.8 | SOVEREIGN VIDEO-POD v6.2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
@@ -22,13 +22,13 @@
             z-index: 100; 
         }
 
-        /* FULL VIEW VIDEO SCREEN */
+        /* PERFECT SNAP-TO-FIT SCREEN */
         .screen { 
             width: 100%; 
-            height: 165px; 
+            height: 155px; /* TIGHTENED FOR FULL VIEW */
             background: #000; 
             border-radius: 18px; 
-            margin-bottom: 12px; 
+            margin-bottom: 10px; 
             overflow: hidden; 
             border: 1px solid rgba(255,255,255,0.15); 
             position: relative; 
@@ -37,7 +37,7 @@
         video, #artwork-display { 
             width: 100%; 
             height: 100%; 
-            object-fit: cover; /* FORCES FULL VIEW */
+            object-fit: cover; 
             position: absolute; 
             top: 0; 
             left: 0; 
@@ -50,7 +50,7 @@
         .is-playing .bar { animation: dance 0.6s ease-in-out infinite alternate; opacity: 1; }
         @keyframes dance { from { height: 8px; } to { height: 32px; } }
 
-        .control-wheel { border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 50%; width: 170px; height: 170px; display: flex; align-items: center; justify-content: center; gap: 20px; margin: 10px auto 0; position: relative; }
+        .control-wheel { border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 50%; width: 170px; height: 170px; display: flex; align-items: center; justify-content: center; gap: 20px; margin: 5px auto 0; position: relative; }
         #playBtn { position: relative; background: transparent; border: 1.5px solid rgba(255,255,255,0.8); border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
         .is-playing #playBtn::after { content: ''; position: absolute; inset: -6px; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 0; } }
@@ -67,7 +67,6 @@
             </div>
         </div>
 
-        <!-- THE FULL VIEW SCREEN -->
         <div class="screen">
             <video id="team-video" playsinline>
                 <source src="team-loop.mp4" type="video/mp4">
@@ -77,7 +76,7 @@
 
         <div class="h-12 flex flex-col items-center justify-center text-center px-2">
             <h1 id="title" class="orbitron text-white text-[12px] tracking-tighter mb-1 uppercase leading-tight">PARLEY INTRODUCTION</h1>
-            <p class="text-pink-500 text-[9px] font-bold tracking-[0.4em] uppercase">Architect Sherman</p>
+            <p class="text-pink-500 text-[9px] font-bold tracking-[0.4em] uppercase">Architect Marco</p>
         </div>
 
         <div id="viz" class="flex items-end justify-center gap-1 h-8 mb-2">
@@ -95,7 +94,7 @@
 
     <script>
         const tracks = [
-            { isIntro: true, title: "PARLEY INTRODUCTION", file: "team-loop.mp4", art: "lexi-pilot-1.jpg" },
+            { isIntro: true, title: "THE SICK TEAM INTRODUCTION", file: "team-loop.mp4", art: "lexi-pilot-1.jpg" },
             { title: "WHO WE ARE (LKF MIX)", file: "track1.mp3", art: "lexi-pilot-1.jpg" },
             { title: "THE GRAND (TGD MIX)", file: "track2.mp3", art: "lexi-pilot-2.jpg" },
             { title: "ROBERT CHAI (RCT MIX)", file: "track3.mp3", art: "lexi-pilot-3.jpg" },
