@@ -79,16 +79,16 @@
     </div> <!-- END GLASS -->
 
    
-        <script>
+      <script>
     const tracks = [
-        { title: "LE SAU PEH LAH (LSPL MIX)", artist: "Architect Sherman", file: "LE SAU PEH LAH - THE SICK TEAM 2 (LSPL MIX).mp3", art: "lexi-pilot-1.jpg" },
-        { title: "LAN KWAI FUNG (LKFTST MIX)", artist: "Architect Sherman", file: "LAN KWAI FUNG - THE SICK TEAM 2 (LKFTST MIX).mp3", art: "lexi-pilot-2.jpg" },
-        { title: "ROBERT CHAI (RCT MIX)", artist: "Architect Sherman", file: "ROBERT CHAI - THE SICK TEAM 2 (RCT MIX).mp3", art: "lexi-pilot-3.jpg" },
-        { title: "ROBERT CHAI (HBT MIX)", artist: "Architect Sherman", file: "ROBERT CHAI - THE SICK TEAM 2 (HBT MIX).mp3", art: "lexi-pilot-4.jpg" },
-        { title: "WHO WE ARE (LKF MIX)", artist: "Architect Sherman", file: "WHO WE ARE - THE SICK TEAM 2 (LKF MIX).mp3", art: "lexi-pilot-5.jpg" },
-        { title: "IM THE SCAR (SCAR MIX)", artist: "Architect Sherman", file: "IM THE SCAR YOU COULDNT ERASE - THE SICK TEAM 2.mp3", art: "lexi-pilot-6.jpg" },
-        { title: "HK NIGHTLIFE (HKNL MIX)", artist: "Architect Sherman", file: "HK NIGHTLIFE - THE SICK TEAM 2 (HKNL MIX).mp3", art: "lexi-pilot-7.jpg" },
-        { title: "SOVEREIGN ALPHA", artist: "Architect Sherman", file: "Track8.mp3", art: "lexi-pilot-8.jpg" }
+        { title: "LE SAU PEH LAH (LSPL MIX)", artist: "Architect Sherman", file: "track1.mp3", art: "lexi-pilot-1.jpg" },
+        { title: "LAN KWAI FUNG (LKFTST MIX)", artist: "Architect Sherman", file: "track2.mp3", art: "lexi-pilot-2.jpg" },
+        { title: "ROBERT CHAI (RCT MIX)", artist: "Architect Sherman", file: "track3.mp3", art: "lexi-pilot-3.jpg" },
+        { title: "ROBERT CHAI (HBT MIX)", artist: "Architect Sherman", file: "track4.mp3", art: "lexi-pilot-4.jpg" },
+        { title: "WHO WE ARE (LKF MIX)", artist: "Architect Sherman", file: "track5.mp3", art: "lexi-pilot-5.jpg" },
+        { title: "IM THE SCAR (SCAR MIX)", artist: "Architect Sherman", file: "track6.mp3", art: "lexi-pilot-6.jpg" },
+        { title: "HK NIGHTLIFE (HKNL MIX)", artist: "Architect Sherman", file: "track7.mp3", art: "lexi-pilot-7.jpg" },
+        { title: "SOVEREIGN ALPHA", artist: "Architect Sherman", file: "track8.mp3", art: "lexi-pilot-8.jpg" }
     ];
 
     let currentTrackIndex = 0;
@@ -112,7 +112,7 @@
         trackCount.innerText = `TRACK ${index + 1}/${tracks.length}`;
         artwork.src = track.art;
         if (isPlaying) {
-            audio.play().catch(e => console.log("Playback interrupted."));
+            audio.play().catch(e => console.log("Stream sync pending..."));
         }
     }
 
@@ -121,7 +121,7 @@
             audio.pause();
             isPlaying = false;
             glass.classList.remove('is-playing');
-            // Show Play Triangle
+            // Reset to Play Triangle
             playIcon.className = "w-0 h-0 border-t-[10px] border-t-transparent border-l-[16px] border-l-white border-b-[10px] border-b-transparent ml-1";
             playIcon.innerHTML = '';
             dot.classList.replace('bg-pink-500', 'bg-white/20');
@@ -130,13 +130,13 @@
             audio.play().then(() => {
                 isPlaying = true;
                 glass.classList.add('is-playing');
-                // Show Pause Bars
+                // Set to Pause Bars
                 playIcon.className = "flex justify-center gap-1";
                 playIcon.innerHTML = '<div class="w-1.5 h-5 bg-white"></div><div class="w-1.5 h-5 bg-white"></div>';
                 dot.classList.replace('bg-white/20', 'bg-pink-500');
                 statusText.innerText = "ON-AIR";
             }).catch(err => {
-                alert("Signal Error: Ensure MP3 files are in the GitHub folder.");
+                alert("Signal Error: Check if track files are named track1.mp3, etc.");
             });
         }
     }
@@ -153,13 +153,13 @@
         loadTrack(currentTrackIndex);
     });
 
-    // Auto-advance when song ends
+    // Auto-advance
     audio.onended = () => {
         currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
         loadTrack(currentTrackIndex);
     };
 
-    // Initial Load
+    // Initialize first track
     loadTrack(currentTrackIndex);
 </script>
 </body>
