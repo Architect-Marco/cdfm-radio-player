@@ -17,7 +17,7 @@
     @keyframes dance { from { height: 10px; } to { height: 50px; } }
     
     /* FIX: Moved margin inside brackets and set to -15px to pull it UP */
-    .control-wheel { border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%; width: 210px; height: 210px; display: flex; align-items: center; justify-content: center; gap: 30px; margin: -15px auto 0; position: relative; }
+    .control-wheel { border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%; width: 210px; height: 210px; display: flex; align-items: center; justify-content: center; gap: 30px; margin: 10px auto 20px; position: relative; }
     
     #playBtn { position: relative; background: transparent; border: 1.5px solid rgba(255,255,255,0.8); border-radius: 50%; width: 65px; height: 65px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
     
@@ -46,11 +46,11 @@
         <!-- TITLES -->
         <div class="h-20 flex flex-col items-center justify-center text-center">
             <h1 id="title" class="orbitron text-white text-lg tracking-tighter mb-1 uppercase leading-tight">Syncing Signal...</h1>
-            <p id="artist" class="text-pink-500 text-[10px] font-bold tracking-[0.5em] uppercase">Architect Sherman</p>
+            <p id="artist" class="text-pink-500 text-[10px] font-bold tracking-[0.5em] uppercase">Architect Polomarco</p>
         </div>
 
-       <!-- VISUALIZER -->
-    <div id="viz" class="flex items-end justify-center gap-1 h-12 mb-2">
+       <!-- VISUALIZER (12 LINES) -->
+    <div id="viz" class="flex items-end justify-center gap-1 h-12 mb-4">
         <div class="bar" style="animation-delay: 0.1s"></div>
         <div class="bar" style="animation-delay: 0.3s"></div>
         <div class="bar" style="animation-delay: 0.5s"></div>
@@ -64,6 +64,28 @@
         <div class="bar" style="animation-delay: 0.4s"></div>
         <div class="bar" style="animation-delay: 0.6s"></div>
     </div>
+
+    <!-- CONTROLS (SINGLE BIG WHEEL) -->
+    <div class="flex justify-center w-full">
+        <div class="control-wheel">
+            <button id="prevBtn" class="opacity-40 hover:opacity-100 transition-opacity">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            </button>
+            <button id="playBtn">
+                <div id="playIcon" class="w-0 h-0 border-t-[10px] border-t-transparent border-l-[16px] border-l-white border-b-[10px] border-b-transparent ml-1"></div>
+            </button>
+            <button id="nextBtn" class="opacity-40 hover:opacity-100 transition-opacity">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 6l8.5 6L6 18zm9 0h2v12h-2z"/></svg>
+            </button>
+        </div>
+    </div>
+</div> <!-- THIS CLOSES THE GLASS PLAYER -->
+
+<script>
+    /* ENSURE NO EXTRA CODE IS BELOW THIS LINE */
+</script>
+</body>
+</html>
 
     <!-- CONTROLS (SINGLE BIG WHEEL) -->
     <div class="flex justify-center w-full">
