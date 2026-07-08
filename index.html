@@ -16,6 +16,18 @@
         button { outline: none !important; -webkit-tap-highlight-color: transparent; }
         #playBtn { transition: all 0.3s ease; filter: drop-shadow(0 0 10px rgba(255,255,255,0)); }
         .is-playing #playBtn { color: #ff00ff; filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.8)); }
+        .control-wheel {
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            width: 160px;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px auto 0;
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -51,11 +63,24 @@
         </div>
 
         <!-- CONTROLS -->
-        <div class="flex items-center gap-12">
-            <button id="prevBtn" class="text-white/20 hover:text-white transition-colors text-2xl active:scale-90">⏮</button>
-            <button id="playBtn" class="text-white text-6xl active:scale-90 transition-all cursor-pointer">▶</button>
-            <button id="nextBtn" class="text-white/20 hover:text-white transition-colors text-2xl active:scale-90">⏭</button>
+    <div class="flex justify-center w-full mt-4">
+        <div class="control-wheel">
+            <!-- Back Button -->
+            <button id="prevBtn" class="opacity-40 hover:opacity-100 transition-opacity">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            </button>
+            
+            <!-- Play Button (Centered) -->
+            <button id="playBtn" class="bg-white rounded-full p-6 hover:scale-110 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                <div id="playIcon" class="w-0 h-0 border-t-[12px] border-t-transparent border-l-[18px] border-l-black border-b-[12px] border-b-transparent ml-1"></div>
+            </button>
+
+            <!-- Next Button -->
+            <button id="nextBtn" class="opacity-40 hover:opacity-100 transition-opacity">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 6l8.5 6L6 18zm9 0h2v12h-2z"/></svg>
+            </button>
         </div>
+    </div>
         
         <audio id="engine" src="track1.mp3" preload="auto"></audio>
     </div>
