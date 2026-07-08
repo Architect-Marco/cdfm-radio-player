@@ -112,27 +112,33 @@
         const artDisplay = document.getElementById('artwork-display'); const dot = document.getElementById('dot');
         const statusText = document.getElementById('status-text');
 
-       function load(i) {
-    // 1. THE KILL SWITCH: Stop everything currently playing
+    function load(i) {
+    // 1. HARD KILL: Stop and Reset both Audio and Video Playheads
     audio.pause();
+    audio.currentTime = 0; 
     video.pause();
-    audio.currentTime = 0;
+    video.currentTime = 0; 
 
     const t = tracks[i];
+    
     if (t.isIntro) {
+        // UI VISUALS FOR INTRO
         video.style.opacity = "1"; 
         artDisplay.style.opacity = "0";
         trackCount.innerText = "INTRO";
     } else {
+        // UI VISUALS FOR 8-TRACK MODE
         video.style.opacity = "0"; 
         artDisplay.style.opacity = "1";
+        
         artDisplay.src = t.art; 
         audio.src = t.file;
         trackCount.innerText = `TRACK ${i}/8`;
     }
+
     title.innerText = t.title;
 
-    // 2. TRIGGER PLAYBACK (Only if the system is in 'playing' state)
+    // 2. THE HANDOFF LOGIC
     if (playing) {
         if (t.isIntro) {
             video.play();
