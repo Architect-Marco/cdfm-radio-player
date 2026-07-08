@@ -134,27 +134,23 @@
             { title: "LAN KWAI FUNG (LKFTST MIX)", file: "8 - LAN KWAI FUNG - THE SICK TEAM (LKFTST MIX).mp3", art: "lexi-pilot-8.jpg" }
         ];
 
-        let idx = 0;
-        let playing = false;
-        const audio = new Audio();
-        
-        const playBtn = document.getElementById('playBtn');
-        const playIcon = document.getElementById('playIcon');
-        const glass = document.querySelector('.glass');
-        const title = document.getElementById('title');
-        const trackCount = document.getElementById('track-count');
-        const artwork = document.getElementById('artwork');
-        const dot = document.getElementById('dot');
-        const statusText = document.getElementById('status-text');
+        let idx = 0; let playing = false; const audio = new Audio();
+        const playBtn = document.getElementById('playBtn'); const playIcon = document.getElementById('playIcon');
+        const glass = document.querySelector('.glass'); const title = document.getElementById('title');
+        const trackCount = document.getElementById('track-count'); const artwork = document.getElementById('artwork');
+        const dot = document.getElementById('dot'); const statusText = document.getElementById('status-text');
 
         function load(i) {
             const t = tracks[i];
-            // Handles spaces/characters in file names
-            audio.src = encodeURI(t.file);
+            // ENCODE URI ensures the spaces are handled correctly by the browser
+            audio.src = encodeURIComponent(t.file).replace(/%20/g, ' '); 
+            // If the line above fails, we use the direct string
+            audio.src = t.file;
+            
             title.innerText = t.title;
             trackCount.innerText = `TRACK ${i + 1}/8`;
             artwork.src = t.art;
-            if (playing) audio.play();
+            if (playing) audio.play().catch(e => console.log("Stream sync pending..."));
         }
 
         playBtn.onclick = () => {
@@ -167,13 +163,17 @@
                 dot.className = "w-1.5 h-1.5 bg-white/20 rounded-full mr-2";
                 statusText.innerText = "OFF-AIR";
             } else {
-                audio.play().catch(e => alert("Signal Check: Ensure MP3 files are named exactly like the list in GitHub."));
-                playing = true;
-                glass.classList.add('is-playing');
-                playIcon.className = "flex gap-1";
-                playIcon.innerHTML = '<div class="w-1 h-4 bg-white"></div><div class="w-1 h-4 bg-white"></div>';
-                dot.className = "w-1.5 h-1.5 bg-pink-500 rounded-full mr-2 shadow-[0_0_10px_#ff00ff]";
-                statusText.innerText = "ON-AIR";
+                audio.play().then(() => {
+                    playing = true;
+                    glass.classList.add('is-playing');
+                    playIcon.className = "flex gap-1";
+                    playIcon.innerHTML = '<div class="w-1 h-4 bg-white"></div><div class="w-1 h-4 bg-white"></div>';
+                    dot.className = "w-1.5 h-1.5 bg-pink-500 rounded-full mr-2 shadow-[0_0_10px_#ff00ff]";
+                    statusText.innerText = "ON-AIR";
+                }).catch(err => {
+                    console.error(err);
+                    alert("Signal Check: " + tracks[idx].file + " not found. Verify filename in GitHub!");
+                });
             }
         };
 
@@ -183,5 +183,3 @@
         
         load(idx);
     </script>
-</body>
-</html>
