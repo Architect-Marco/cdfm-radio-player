@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CDFM 108.8 | SOVEREIGN MINI-POD v4.3</title>
+    <title>CDFM 108.8 | SOVEREIGN MINI-POD v4.4</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
@@ -51,14 +51,14 @@
 
     <script>
         const tracks = [
-            { track: 1, title: "WHO WE ARE (LKF MIX)", file: "1 - WHO WE ARE - THE SICK TEAM (LKF MIX).mp3", art: "lexi-pilot-1.jpg" },
-            { track: 2, title: "THE GRAND (TGD MIX)", file: "2 - THE GRAND - THE SICK TEAM (TGD MIX).mp3", art: "lexi-pilot-2.jpg" },
-            { track: 3, trackName: "ROBERT CHAI", title: "ROBERT CHAI (RCT MIX)", file: "3 - ROBERT CHAI - THE SICK TEAM (RCT MIX).mp3", art: "lexi-pilot-3.jpg" },
-            { track: 4, title: "HK NIGHTLIFE (HKNL MIX)", file: "4 - HK NIGHTLIFE - THE SICK TEAM (HKNL MIX).mp3", art: "lexi-pilot-4.jpg" },
-            { track: 5, title: "IM THE SCAR (TSYCE MIX)", file: "5 - IM THE SCAR YOU COULDNT ERASE - THE SICK TEAM (TSYCE MIX).mp3", art: "lexi-pilot-5.jpg" },
-            { track: 6, title: "ROBERT CHAI (HBT MIX)", file: "6 - ROBERT CHAI - THE SICK TEAM (HBT MIX).mp3", art: "lexi-pilot-6.jpg" },
-            { track: 7, title: "LE SAU PEH LAH (LSPL MIX)", file: "7 - LE SAU PEH LAH - THE SICK TEAM (LSPL MIX).mp3", art: "lexi-pilot-7.jpg" },
-            { track: 8, title: "LAN KWAI FUNG (LKFTST MIX)", file: "8 - LAN KWAI FUNG - THE SICK TEAM (LKFTST MIX).mp3", art: "lexi-pilot-8.jpg" }
+            { title: "WHO WE ARE (LKF MIX)", file: "track1.mp3", art: "lexi-pilot-1.jpg" },
+            { title: "THE GRAND (TGD MIX)", file: "track2.mp3", art: "lexi-pilot-2.jpg" },
+            { title: "ROBERT CHAI (RCT MIX)", file: "track3.mp3", art: "lexi-pilot-3.jpg" },
+            { title: "HK NIGHTLIFE (HKNL MIX)", file: "track4.mp3", art: "lexi-pilot-4.jpg" },
+            { title: "IM THE SCAR (TSYCE MIX)", file: "track5.mp3", art: "lexi-pilot-5.jpg" },
+            { title: "ROBERT CHAI (HBT MIX)", file: "track6.mp3", art: "lexi-pilot-6.jpg" },
+            { title: "LE SAU PEH LAH (LSPL MIX)", file: "track7.mp3", art: "lexi-pilot-7.jpg" },
+            { title: "LAN KWAI FUNG (LKFTST MIX)", file: "track8.mp3", art: "lexi-pilot-8.jpg" }
         ];
 
         let idx = 0; let playing = false; const audio = new Audio();
@@ -69,10 +69,9 @@
 
         function load(i) {
             const t = tracks[i];
-            // Encode handles spaces/dashes correctly for GitHub Pages
-            audio.src = encodeURI(t.file);
+            audio.src = t.file; // NO SPACES = NO ERRORS
             title.innerText = t.title;
-            trackCount.innerText = `TRACK ${t.track}/8`;
+            trackCount.innerText = `TRACK ${i + 1}/8`;
             artwork.src = t.art;
             if (playing) audio.play();
         }
@@ -93,7 +92,8 @@
                     dot.className = "w-1.5 h-1.5 bg-pink-500 rounded-full mr-2 shadow-[0_0_10px_#ff00ff]";
                     statusText.innerText = "ON-AIR";
                 }).catch(e => {
-                    alert("Signal Error: " + tracks[idx].file + " not found. Ensure names match GitHub exactly.");
+                    alert("Signal Error: Check console for path detail.");
+                    console.log("Failed to load: " + audio.src);
                 });
             }
         };
