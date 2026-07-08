@@ -28,45 +28,43 @@
 </head>
 <body>
 
-    <div class="glass w-[95%] max-w-md p-10 flex flex-col items-center shadow-2xl">
+    <div class="glass flex flex-col items-center">
         <div class="w-full flex justify-between mb-4">
-            <span id="track-count" class="text-[10px] orbitron text-white uppercase font-bold tracking-widest">Loading Arsenal...</span>
+            <span id="track-count" class="text-[10px] orbitron text-white uppercase font-bold tracking-widest">TRACK 1/8</span>
             <div class="flex items-center">
                 <div id="dot" class="w-2 h-2 bg-white/20 rounded-full mr-2"></div>
-                <span id="stat" class="text-[10px] orbitron text-white/30 tracking-widest uppercase">Off-Air</span>
+                <span class="text-[10px] orbitron text-white/40 uppercase font-bold tracking-widest">OFF-AIR</span>
             </div>
         </div>
 
         <!-- ARTWORK -->
         <div class="w-64 h-64 bg-zinc-900 rounded-2xl mb-2 overflow-hidden border border-white/5 shadow-2xl relative">
-             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
             <img id="artwork" src="lexi-pilot-1.jpg" class="w-full h-full object-cover">
         </div>
 
         <!-- TITLES -->
         <div class="h-20 flex flex-col items-center justify-center text-center">
             <h1 id="title" class="orbitron text-white text-lg tracking-tighter mb-1 uppercase leading-tight">Syncing Signal...</h1>
-            <p id="artist" class="text-pink-500 text-[10px] font-bold tracking-[0.5em] uppercase">Architect Polomarco</p>
+            <p id="artist" class="text-pink-500 text-[10px] font-bold tracking-[0.5em] uppercase">Architect Sherman</p>
         </div>
 
-       <!-- VISUALIZER (12 LINES) -->
-    <div id="viz" class="flex items-end justify-center gap-1 h-12 mb-4">
-        <div class="bar" style="animation-delay: 0.1s"></div>
-        <div class="bar" style="animation-delay: 0.3s"></div>
-        <div class="bar" style="animation-delay: 0.5s"></div>
-        <div class="bar" style="animation-delay: 0.2s"></div>
-        <div class="bar" style="animation-delay: 0.4s"></div>
-        <div class="bar" style="animation-delay: 0.6s"></div>
-        <div class="bar" style="animation-delay: 0.1s"></div>
-        <div class="bar" style="animation-delay: 0.3s"></div>
-        <div class="bar" style="animation-delay: 0.5s"></div>
-        <div class="bar" style="animation-delay: 0.2s"></div>
-        <div class="bar" style="animation-delay: 0.4s"></div>
-        <div class="bar" style="animation-delay: 0.6s"></div>
-    </div>
+        <!-- VISUALIZER (12 LINES) -->
+        <div id="viz" class="flex items-end justify-center gap-1 h-12 mb-4">
+            <div class="bar" style="animation-delay: 0.1s"></div>
+            <div class="bar" style="animation-delay: 0.3s"></div>
+            <div class="bar" style="animation-delay: 0.5s"></div>
+            <div class="bar" style="animation-delay: 0.2s"></div>
+            <div class="bar" style="animation-delay: 0.4s"></div>
+            <div class="bar" style="animation-delay: 0.6s"></div>
+            <div class="bar" style="animation-delay: 0.1s"></div>
+            <div class="bar" style="animation-delay: 0.3s"></div>
+            <div class="bar" style="animation-delay: 0.5s"></div>
+            <div class="bar" style="animation-delay: 0.2s"></div>
+            <div class="bar" style="animation-delay: 0.4s"></div>
+            <div class="bar" style="animation-delay: 0.6s"></div>
+        </div>
 
-    <!-- CONTROLS (SINGLE BIG WHEEL) -->
-    <div class="flex justify-center w-full">
+        <!-- CONTROLS (SINGLE MASTER WHEEL) -->
         <div class="control-wheel">
             <button id="prevBtn" class="opacity-40 hover:opacity-100 transition-opacity">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
@@ -78,147 +76,10 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 6l8.5 6L6 18zm9 0h2v12h-2z"/></svg>
             </button>
         </div>
-    </div>
-</div> <!-- THIS CLOSES THE GLASS PLAYER -->
-
-<script>
-    /* ENSURE NO EXTRA CODE IS BELOW THIS LINE */
-</script>
-</body>
-</html>
-
-    <!-- CONTROLS (SINGLE BIG WHEEL) -->
-    <div class="flex justify-center w-full">
-        <div class="control-wheel">
-            <button id="prevBtn" class="opacity-40 hover:opacity-100 transition-opacity">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-            </button>
-            <button id="playBtn">
-                <div id="playIcon" class="w-0 h-0 border-t-[10px] border-t-transparent border-l-[16px] border-l-white border-b-[10px] border-b-transparent ml-1"></div>
-            </button>
-            <button id="nextBtn" class="opacity-40 hover:opacity-100 transition-opacity">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 6l8.5 6L6 18zm9 0h2v12h-2z"/></svg>
-            </button>
-        </div>
-    </div>
-</div> <!-- END GLASS -->
-
-    <!-- CONTROLS (BIG SOVEREIGN WHEEL) -->
-    <div class="flex justify-center w-full">
-        <div class="control-wheel">
-            <!-- Back -->
-            <button id="prevBtn" class="opacity-40 hover:opacity-100 transition-opacity">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-            </button>
-            
-            <!-- Transparent Play Button -->
-            <button id="playBtn">
-                <div id="playIcon" class="w-0 h-0 border-t-[10px] border-t-transparent border-l-[16px] border-l-white border-b-[10px] border-b-transparent ml-1"></div>
-            </button>
-
-            <!-- Next -->
-            <button id="nextBtn" class="opacity-40 hover:opacity-100 transition-opacity">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 6l8.5 6L6 18zm9 0h2v12h-2z"/></svg>
-            </button>
-        </div>
-    </div>
-
-        <!-- CONTROLS -->
-    <div class="flex justify-center w-full mt-4">
-        <div class="control-wheel">
-            <!-- Back Button -->
-            <button id="prevBtn" class="opacity-40 hover:opacity-100 transition-opacity">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-            </button>
-            
-            <!-- Play Button (Centered) -->
-            <button id="playBtn" class="bg-white rounded-full p-6 hover:scale-110 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                <div id="playIcon" class="w-0 h-0 border-t-[12px] border-t-transparent border-l-[18px] border-l-black border-b-[12px] border-b-transparent ml-1"></div>
-            </button>
-
-            <!-- Next Button -->
-            <button id="nextBtn" class="opacity-40 hover:opacity-100 transition-opacity">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 6l8.5 6L6 18zm9 0h2v12h-2z"/></svg>
-            </button>
-        </div>
-    </div>
-        
-        <audio id="engine" src="track1.mp3" preload="auto"></audio>
-    </div>
+    </div> <!-- END GLASS -->
 
     <script>
-        const playlist = [
-            { title: "WHO WE ARE - THE SICK TEAM (LKF MIX)", file: "track1.mp3", art: "lexi-pilot-1.jpg" },
-            { title: "THE GRAND - THE SICK TEAM (TGD MIX)", file: "track2.mp3", art: "lexi-pilot-2.jpg" },
-            { title: "ROBERT CHAI - THE SICK TEAM (RCT MIX)", file: "track3.mp3", art: "lexi-pilot-3.jpg" },
-            { title: "HK NIGHTLIFE - THE SICK TEAM (HKNL MIX)", file: "track4.mp3", art: "lexi-pilot-1.jpg" },
-            { title: "IM THE SCAR - THE SICK TEAM (TSYCE MIX)", file: "track5.mp3", art: "lexi-pilot-2.jpg" },
-            { title: "ROBERT CHAI - THE SICK TEAM (HBT MIX)", file: "track6.mp3", art: "lexi-pilot-3.jpg" },
-            { title: "LE SAU PEH LAH - THE SICK TEAM (LSPL MIX)", file: "track7.mp3", art: "lexi-pilot-1.jpg" },
-            { title: "LAN KWAI FUNG - THE SICK TEAM (LKFTST MIX)", file: "track8.mp3", art: "lexi-pilot-2.jpg" }
-        ];
-
-        let currentIdx = 0;
-        const audio = document.getElementById('engine');
-        const btn = document.getElementById('playBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const prevBtn = document.getElementById('prevBtn');
-        const title = document.getElementById('title');
-        const artwork = document.getElementById('artwork');
-        const count = document.getElementById('track-count');
-        const viz = document.getElementById('viz');
-        const dot = document.getElementById('dot');
-        const stat = document.getElementById('stat');
-
-        function updateUI() {
-            const track = playlist[currentIdx];
-            title.innerText = track.title;
-            artwork.src = track.art;
-            count.innerText = `Track ${currentIdx + 1}/${playlist.length}`;
-        }
-
-        window.onload = () => updateUI();
-
-        function handleTrackChange() {
-            const wasPlaying = !audio.paused;
-            audio.src = playlist[currentIdx].file;
-            updateUI();
-            if (wasPlaying) audio.play();
-        }
-
-        btn.onclick = () => {
-            if (audio.paused) {
-                audio.play();
-                btn.innerText = "⏸";
-                viz.classList.add('is-playing');
-                dot.classList.add('bg-red-600', 'animate-pulse');
-                stat.innerText = "On-Air";
-                stat.classList.add('text-red-500');
-            } else {
-                audio.pause();
-                btn.innerText = "▶";
-                viz.classList.remove('is-playing');
-                dot.classList.remove('bg-red-600', 'animate-pulse');
-                stat.innerText = "Off-Air";
-                stat.classList.remove('text-red-500');
-            }
-        };
-
-        nextBtn.onclick = () => {
-            currentIdx = (currentIdx + 1) % playlist.length;
-            handleTrackChange();
-        };
-
-        prevBtn.onclick = () => {
-            currentIdx = (currentIdx - 1 + playlist.length) % playlist.length;
-            handleTrackChange();
-        };
-
-        audio.onended = () => {
-            currentIdx = (currentIdx + 1) % playlist.length;
-            handleTrackChange();
-            audio.play();
-        };
+        // ARCHITECT: Paste your JavaScript logic (track list, button listeners) below this line!
     </script>
 </body>
 </html>
