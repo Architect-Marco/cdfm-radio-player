@@ -67,17 +67,7 @@
             </div>
         </div>
 
-        <div class="screen">
-            <video id="team-video" playsinline>
-                <source src="team-loop.mp4" type="video/mp4">
-            </video>
-            <img id="artwork-display" src="lexi-pilot-1.jpg">
-        </div>
-
-        <div class="h-12 flex flex-col items-center justify-center text-center px-2">
-            <h1 id="title" class="orbitron text-white text-[11px] tracking-tighter mb-1 uppercase leading-tight">THE SICK TEAM INTRODUCTION</h1>
-            <p class="text-pink-500 text-[9px] font-bold tracking-[0.4em] uppercase">Architect Marco</p>
-        </div>
+       <video id="team-video" playsinline webkit-playsinline preload="auto" class="w-full h-full object-cover opacity-0 transition-opacity duration-500"></video>
 
         <div id="viz" class="flex items-end justify-center gap-1 h-8 mb-2">
             <div class="bar" style="animation-delay: 0.1s"></div><div class="bar" style="animation-delay: 0.3s"></div><div class="bar" style="animation-delay: 0.5s"></div><div class="bar" style="animation-delay: 0.2s"></div><div class="bar" style="animation-delay: 0.4s"></div><div class="bar" style="animation-delay: 0.6s"></div><div class="bar" style="animation-delay: 0.1s"></div><div class="bar" style="animation-delay: 0.3s"></div><div class="bar" style="animation-delay: 0.5s"></div><div class="bar" style="animation-delay: 0.2s"></div><div class="bar" style="animation-delay: 0.4s"></div><div class="bar" style="animation-delay: 0.6s"></div>
@@ -128,11 +118,15 @@
     artDisplay.style.opacity = "0";
     
     // LOAD MP4
-    video.src = t.file; 
+    // The "../" tells the player to look outside the wkor folder into the main directory
+video.src = "../" + t.file;
     trackCount.innerText = t.isIntro ? "INTRO" : `VIDEO ${i}/11`;
-    title.innerText = t.title;
+   title.innerText = t.title;
 
-    // PLAY
+    // THE VISUAL LOCK: Turn the screen on
+    video.style.opacity = "1"; 
+
+    // // PLAY
     if (playing) {
         video.play().catch(e => console.log("Haptic interaction needed."));
     }
