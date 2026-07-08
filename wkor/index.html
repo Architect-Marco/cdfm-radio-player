@@ -3,151 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>WKOR FM 107.9 | SOVEREIGN VIDEO-POD v6.3</title>
+    <title>WKOR FM 107.9 | SOVEREIGN AUDIO INTERFACE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-       /* THE NANO-LUXE CONTAINER */
-.glass {
-    background: #050505;
-    width: 260px; /* Reduced from 320px for 'Mini' look */
-    padding: 18px;
-    border-radius: 38px; /* Classic rounded iPod edges */
-    border: 1.8px solid rgba(255, 255, 255, 0.9); /* The Signature Bezel */
-    box-shadow: 0 0 40px rgba(0,0,0,0.8);
-    position: relative;
-    user-select: none;
-}
-
-/* THE MINI-WHEEL */
-.control-wheel {
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 50%;
-    width: 140px; /* Shrunk from 170px */
-    height: 140px; /* Shrunk from 170px */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    background: #0a0a0a;
-}
-
-/* COMPACT SCREEN ADAPTATION */
-.screen {
-    width: 100%;
-    height: 130px; /* Tightened for the Nano look */
-    background: #000;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.1);
-}border: 1px solid rgba(255,255,255,0.1);
-} /* THIS IS LINE 44 */
-
-/* --- INSERT THE TWO TAGS BELOW --- */
-</style>
-<body class="bg-black flex items-center justify-center min-h-screen">
-/* --- INSERT THE TWO TAGS ABOVE --- */
-
-<div class="glass flex flex-col items-center"> <!-- THIS IS LINE 45 -->
-   
+        body { background: #000; font-family: 'Rajdhani', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0; overflow: hidden; }
+        .glass { background: #050505; width: 320px; padding: 25px; border-radius: 45px; border: 1.8px solid #fff; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.9); }
+        .screen { width: 100%; height: 145px; background: #000; border-radius: 18px; margin-bottom: 15px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); position: relative; }
+        #artwork-display { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.5s ease; }
+        .bar { width: 3px; background: #ff00ff; border-radius: 2px; height: 8px; margin: 0 1px; opacity: 0.3; transition: 0.3s; }
+        .is-playing .bar { animation: dance 0.6s ease-in-out infinite alternate; opacity: 1; }
+        @keyframes dance { from { height: 8px; } to { height: 32px; } }
+        .control-wheel { border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50%; width: 170px; height: 170px; display: flex; align-items: center; justify-content: center; margin: 0 auto; background: #0a0a0a; }
+        #playBtn { background: transparent; border: 1.5px solid rgba(255,255,255,0.8); border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+    </style>
+</head>
+<body class="bg-black">
+    <div class="glass flex flex-col items-center">
+        <!-- TOP UI -->
         <div class="w-full flex justify-between mb-4 px-2">
-            <span id="track-count" class="text-[10px] orbitron text-white uppercase font-bold tracking-widest">INTRO</span>
+            <span id="track-count" class="text-[10px] text-white uppercase font-bold tracking-widest text-white/80">WKOR 1/12</span>
             <div class="flex items-center">
                 <div id="dot" class="w-1.5 h-1.5 bg-white/20 rounded-full mr-2"></div>
-                <span id="status-text" class="text-[9px] orbitron text-white/40 uppercase font-bold tracking-widest">OFF-AIR</span>
+                <span id="status-text" class="text-[9px] text-white/40 uppercase font-bold tracking-widest">OFF-AIR</span>
             </div>
         </div>
 
-       <video id="team-video" playsinline webkit-playsinline preload="auto" class="w-full h-full object-cover opacity-0 transition-opacity duration-500"></video>
-
-        <div id="viz" class="flex items-end justify-center gap-1 h-8 mb-2">
-            <div class="bar" style="animation-delay: 0.1s"></div><div class="bar" style="animation-delay: 0.3s"></div><div class="bar" style="animation-delay: 0.5s"></div><div class="bar" style="animation-delay: 0.2s"></div><div class="bar" style="animation-delay: 0.4s"></div><div class="bar" style="animation-delay: 0.6s"></div><div class="bar" style="animation-delay: 0.1s"></div><div class="bar" style="animation-delay: 0.3s"></div><div class="bar" style="animation-delay: 0.5s"></div><div class="bar" style="animation-delay: 0.2s"></div><div class="bar" style="animation-delay: 0.4s"></div><div class="bar" style="animation-delay: 0.6s"></div>
+        <!-- ARTWORK SCREEN -->
+        <div class="screen shadow-[inset_0_0_20px_rgba(0,0,0,1)]">
+            <img id="artwork-display" src="" alt="Sovereign Visual">
         </div>
 
+        <!-- TRACK INFO -->
+        <div class="text-center mb-6 px-2">
+            <h1 id="title" class="text-white text-sm font-bold tracking-tight mb-1 uppercase truncate">SYNCING...</h1>
+            <p class="text-[#ff00ff] text-[10px] font-bold tracking-[0.3em] uppercase">THE SICK TEAM</p>
+        </div>
+
+        <!-- NEON VISUALIZER -->
+        <div id="viz" class="flex items-end justify-center gap-1 h-8 mb-6">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+
+        <!-- HAPTIC WHEEL -->
         <div class="control-wheel">
-            <button id="prevBtn" class="opacity-30 hover:opacity-100"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
-            <button id="playBtn">
-                <div id="playIcon" class="w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-white border-b-[8px] border-b-transparent ml-1"></div>
-            </button>
-            <button id="nextBtn" class="opacity-30 hover:opacity-100"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M6 6l8.5 6L6 18zm9 0h2v12h-2z"/></svg></button>
+            <div class="flex items-center gap-6">
+                <button id="prevBtn" class="opacity-30 hover:opacity-100 transition"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M6 6h2v12H6zm3.5 6L19 18V6z"/></svg></button>
+                <button id="playBtn"><div id="playIcon" class="w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-white border-b-[8px] border-b-transparent ml-1"></div></button>
+                <button id="nextBtn" class="opacity-30 hover:opacity-100 transition"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M6 18l8.5-6L6 6zm9-12h2v12h-2z"/></svg></button>
+            </div>
         </div>
     </div>
 
     <script>
-       const tracks = [
-    { title: "THE SICK TEAM MINI ALBUM MIX", file: "0 - THE SICK TEAM MINI ALUM MIX - intro.mp4", isIntro: true },
-    { title: "I CANT LET THIS FEELING GO (ORIGINAL)", file: "1 - I CANT LET THIS FEELING GO - FEAT LEXI CON (Original Mix).mp4", isIntro: false },
-    { title: "THIS IS US (PART 1)", file: "2 - THIS IS US - THE SICK TEAM FT LEIX CON 1.mp4", isIntro: false },
-    { title: "THIS IS US (PART 2)", file: "3 - THIS IS US - THE SICK TEAM FT LEIX CON 2.mp4", isIntro: false },
-    { title: "ROCK THIS BEATS (PART 1)", file: "4 - ROCK THIS BEATS - THE SICK TEAM FT LEXI CON 1.mp4", isIntro: false },
-    { title: "ROCK THIS BEATS (PART 2)", file: "5 - ROCK THIS BEATS - THE SICK TEAM FT LEXI CON 2.mp4", isIntro: false },
-    { title: "I CANT LET THIS FEELING GO (REMIX 1)", file: "6 - I CANT LET THIS FEELING GO - REMIX - THE SICK TEAM FT LEXI CON 1.mp4", isIntro: false },
-    { title: "I CANT LET THIS FEELING GO (REMIX 2)", file: "7 - I CANT LET THIS FEELING GO REMIX - THE SICK TEAM FT LEXI CON 2.mp4", isIntro: false },
-    { title: "YOU FEEL THE EMOTION (PART 1)", file: "8 - YOU FEEL THE EMOTION - THE SICK TEAM FT LEXI CON 1.mp4", isIntro: false },
-    { title: "YOU FEEL THE EMOTION (PART 2)", file: "9 - YOU FEEL THE EMOTION - THE SICK TEAM FT LEXI CON 2.mp4", isIntro: false },
-    { title: "REACH OUT (PART 1)", file: "10 - REACH OUT - THE SICK TEAM FT LEXI CON 1.mp4", isIntro: false },
-    { title: "REACH OUT (PART 2)", file: "11 - REACH OUT - THE SICK TEAM FT LEXI CON 2.mp4", isIntro: false }
-];
-        let idx = 0; let playing = false; const audio = new Audio();
-        const playBtn = document.getElementById('playBtn'); const playIcon = document.getElementById('playIcon');
-        const glass = document.querySelector('.glass'); const title = document.getElementById('title');
-        const trackCount = document.getElementById('track-count'); const video = document.getElementById('team-video');
-        const artDisplay = document.getElementById('artwork-display'); const dot = document.getElementById('dot');
+        // MASTER ASSETS
+        const sharedArt = "2ND MINI ALBUM MAGAZINE - 2,3,4,5,6,7,8,9,10,11.png";
+        
+        const tracks = [
+            { title: "ALBUM MIX (INTRO)", file: "0 - THE SICK TEAM MINI ALUM MIX - intro.mp3", art: "0 - THE SICK TEAM MINI ALUM MIX - cover art.png" },
+            { title: "I CANT LET GO (ORIGINAL)", file: "1 - I CANT LET THIS FEELING GO - FEAT LEXI CON (Original Mix).mp3", art: "1 - I CANT LET THIS FEELING GO - FEAT LEXI CON (Cover Art).png" },
+            { title: "THIS IS US (PART 1)", file: "2 - THIS IS US - THE SICK TEAM FT LEIX CON 1.mp3", art: sharedArt },
+            { title: "THIS IS US (PART 2)", file: "3 - THIS IS US - THE SICK TEAM FT LEIX CON 2.mp3", art: sharedArt },
+            { title: "ROCK THIS BEATS (PART 1)", file: "4 - ROCK THIS BEATS - THE SICK TEAM FT LEXI CON 1.mp3", art: sharedArt },
+            { title: "ROCK THIS BEATS (PART 2)", file: "5 - ROCK THIS BEATS - THE SICK TEAM FT LEXI CON 2.mp3", art: sharedArt },
+            { title: "FEELING GO (REMIX 1)", file: "6 - I CANT LET THIS FEELING GO - REMIX - THE SICK TEAM FT LEXI CON 1.mp3", art: sharedArt },
+            { title: "FEELING GO (REMIX 2)", file: "7 - I CANT LET THIS FEELING GO REMIX - THE SICK TEAM FT LEXI CON 2.mp3", art: sharedArt },
+            { title: "YOU FEEL EMOTION (PART 1)", file: "8 - YOU FEEL THE EMOTION - THE SICK TEAM FT LEXI CON 1.mp3", art: sharedArt },
+            { title: "YOU FEEL EMOTION (PART 2)", file: "9 - YOU FEEL THE EMOTION - THE SICK TEAM FT LEXI CON 2.mp3", art: sharedArt },
+            { title: "REACH OUT (PART 1)", file: "10 - REACH OUT - THE SICK TEAM FT LEXI CON 1.mp3", art: sharedArt },
+            { title: "REACH OUT (PART 2)", file: "11 - REACH OUT - THE SICK TEAM FT LEXI CON 2.mp3", art: sharedArt }
+        ];
+
+        let idx = 0;
+        let playing = false;
+        const audio = new Audio();
+        
+        const playBtn = document.getElementById('playBtn');
+        const playIcon = document.getElementById('playIcon');
+        const viz = document.getElementById('viz');
+        const title = document.getElementById('title');
+        const artDisplay = document.getElementById('artwork-display');
+        const trackCount = document.getElementById('track-count');
         const statusText = document.getElementById('status-text');
+        const dot = document.getElementById('dot');
 
-    function load(i) {
-    // KILL PREVIOUS
-    video.pause();
-    video.currentTime = 0;
-    audio.pause();
-    audio.src = "";
-
-    const t = tracks[i];
-    
-    // UI LOCK
-    video.style.opacity = "1"; 
-    artDisplay.style.opacity = "0";
-    
-    // LOAD MP4
-    // The "../" tells the player to look outside the wkor folder into the main directory
-video.src = "../" + t.file;
-    trackCount.innerText = t.isIntro ? "INTRO" : `VIDEO ${i}/11`;
-   title.innerText = t.title;
-
-    // THE VISUAL LOCK: Turn the screen on
-    video.style.opacity = "1"; 
-
-    // // PLAY
-    if (playing) {
-        video.play().catch(e => console.log("Haptic interaction needed."));
-    }
-}
+        function load(i) {
+            audio.pause();
+            audio.currentTime = 0;
+            const t = tracks[i];
+            title.innerText = t.title;
+            artDisplay.src = t.art;
+            audio.src = t.file;
+            trackCount.innerText = `WKOR ${i + 1}/12`;
+            if (playing) audio.play();
+        }
 
         playBtn.onclick = () => {
             if (playing) {
-                playing = false; audio.pause(); video.pause();
-                glass.classList.remove('is-playing');
+                playing = false; audio.pause();
+                viz.classList.remove('is-playing');
+                statusText.innerText = "OFF-AIR";
+                dot.className = "w-1.5 h-1.5 bg-white/20 rounded-full mr-2";
                 playIcon.className = "w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-white border-b-[8px] border-b-transparent ml-1";
                 playIcon.innerHTML = '';
-                dot.className = "w-1.5 h-1.5 bg-white/20 rounded-full mr-2";
-                statusText.innerText = "OFF-AIR";
             } else {
-                playing = true;
-               // For WKOR, we always play the video because everything is an MP4
-video.play();
-                glass.classList.add('is-playing');
-                playIcon.className = "flex gap-1";
-                playIcon.innerHTML = '<div class="w-1 h-4 bg-white"></div><div class="w-1 h-4 bg-white"></div>';
-                dot.className = "w-1.5 h-1.5 bg-pink-500 rounded-full mr-2 shadow-[0_0_10px_#ff00ff]";
+                playing = true; audio.play();
+                viz.classList.add('is-playing');
                 statusText.innerText = "ON-AIR";
+                dot.className = "w-1.5 h-1.5 bg-pink-500 rounded-full mr-2 shadow-[0_0_10px_#ff00ff]";
+                playIcon.className = "flex gap-1";
+                playIcon.innerHTML = '<div class="w-1.5 h-4 bg-white"></div><div class="w-1.5 h-4 bg-white"></div>';
             }
         };
 
-        video.onended = () => { idx = 1; load(idx); if(playing) audio.play(); };
-        audio.onended = () => { idx = (idx + 1) % tracks.length; if(idx === 0) idx = 1; load(idx); };
         document.getElementById('nextBtn').onclick = () => { idx = (idx + 1) % tracks.length; load(idx); };
         document.getElementById('prevBtn').onclick = () => { idx = (idx - 1 + tracks.length) % tracks.length; load(idx); };
+        audio.onended = () => { idx = (idx + 1) % tracks.length; load(idx); };
 
+        // INITIAL LOAD
         load(idx);
     </script>
+</body>
+</html>
